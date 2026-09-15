@@ -10,8 +10,7 @@ The notebook ([`pacman_dqn.ipynb`](pacman_dqn.ipynb)) trains a convolutional Q-n
 
 1. Clone this repository and open `pacman_dqn.ipynb` in Jupyter, VS Code, or Google Colab
    (select a Python 3.11–3.13 kernel; in Colab pick a GPU runtime if available).
-2. Section 1 contains the three hyperparameters (currently set to the 100-episode run below —
-   my final, graded run. Leave them as-is to reproduce it, or change them to run your own experiment).
+2. Section 1 contains the three hyperparameters (currently set to the 100-episode run below. Leave them as-is to reproduce it, or change them to run your own experiment).
 3. Run all cells in order. Setup installs its own packages automatically.
 
 I ran the notebook **twice** with the same exploration and learning rate, changing only the
@@ -22,7 +21,7 @@ episode budget, so I could compare a short setup-check run against a full traini
 | Setting | Value | Why I chose it |
 |---|---|---|
 | **Exploration** | `0.20` | Kept the notebook's suggested starting point — 20% random moves after warm-up balances exploiting what the network has learned against continuing to discover the map. It is also the value the repo's own author used to verify the notebook works end-to-end, so it was a safe, well-tested choice. Held constant across both runs. |
-| **Episodes** | `5`, then `100` | First ran `5` as a setup check, exactly as the assignment recommends, to confirm the full pipeline (install → baseline eval → training → final eval → GIFs → plot → ZIP) worked on my machine (CPU-only, no CUDA/MPS). Then ran `100` — the notebook's own starting value — as my real, graded training run, since gameplay performance on the leaderboard is scored on the *trained* agent and 5 episodes is explicitly "a setup check, not a promise of useful play." |
+| **Episodes** | `5`, then `100` | First ran `5` as a setup check, exactly as the assignment recommends, to confirm the full pipeline (install → baseline eval → training → final eval → GIFs → plot → ZIP) worked on my machine (CPU-only, no CUDA/MPS). Then ran `100` — the notebook's own starting value — to observe the impact of collecting more training data. |
 | **Learning rate** | `0.0001` | Used the notebook's reference point in both runs. I considered raising it to `0.01` (100x higher) for faster learning, but that's well outside the range Adam-based DQN implementations typically use (usually 0.0001–0.0005) and risks destabilizing training — the loss curve would likely spike or the Q-values could diverge with a batch size of only 32. I kept `0.0001` for stable, verified training instead. |
 
 I only edited these three values in section 1 (cell 2) between runs. I also set
@@ -35,10 +34,8 @@ locally; it does not affect training, scores, or the saved GIFs.
 **Expected:** For the 5-episode run, I expected no reliable improvement — the assignment itself
 warns that 5 episodes is not enough for useful learning, and with so little data I expected the
 "before" and "after" agents to look and score about the same. For the 100-episode run, I expected
-a real, learning-updates-driven amount of training (roughly 15,000 gradient steps, ~20x more than
-the 5-episode run) to produce a modest but genuine improvement — Ms. Pac-Man is a hard Atari game,
-and this notebook intentionally uses a small replay buffer (5,000 transitions) and short training
-budget for classroom purposes, so I did not expect strong or highly polished play either way.
+a real, learning-updates-driven amount of training ( ~20x more than
+the 5-episode run) to produce a modest but genuine improvement.
 
 **Observed:** This is exactly the pattern I saw. The 5-episode run's mean score did rise (492.0 →
 730.0), but that was driven almost entirely by one outlier game (seed 303: 320 → 1640) while
