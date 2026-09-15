@@ -5,3 +5,4 @@ pacman_runs/
 *.pt
 .DS_Store
 .vscode/settings.json
+.claude/
